@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useReducer } from 'react';
 
 // import classNames from 'classnames';
 // import styles from './App.module.scss';
@@ -6,24 +6,36 @@ import { useState, useEffect, useMemo } from 'react';
 import Playground from './features/Playground/Playground';
 import Shop from './features/Shop/Shop';
 
+import { manufacturersData } from './features/Shop/manufacturersData';
+import { manufacturersReducer } from './features/Shop/manufacturersReducer';
+
 function App() {
     const [coins, setCoins] = useState(0);
     const [coinsPerClick, setCoinsPerClick] = useState(1);
-    const [manufacturers, setManufacturers] = useState(new Array({coinsPerSecond: 15}))
+    const [manufacturers, dispatchManufacturers] = useReducer(
+        manufacturersReducer, 
+        new Array()
+    );
 
     const coinsPerSecond = useMemo(() => {
-        return manufacturers.reduce((coinsPerSecond, manufacturer) => {
-            return coinsPerSecond += manufacturer.coinsPerSecond;
-        }, 0)
+        if (manufacturers) {
+            return manufacturers.reduce((coinsPerSecond, manufacturer) => {
+                return coinsPerSecond += 
+                    manufacturersData[manufacturer.id].coinsPerSecond * 
+                    manufacturer.count;
+            }, 0)
+        }
     }, [manufacturers]);
 
     useEffect(() => {
-        const intervalID = setInterval(() => {
-            setCoins((prevCoins: any) => prevCoins + coinsPerSecond);
-        }, 1000);
-
-        return () => {
-            clearInterval(intervalID);
+        if (manufacturers) {
+            const intervalID = setInterval(() => {
+                setCoins((prevCoins: any) => prevCoins + coinsPerSecond);
+            }, 1000);
+    
+            return () => {
+                clearInterval(intervalID);
+            }
         }
     }, [manufacturers]);
 
@@ -31,7 +43,8 @@ function App() {
         <main>
             <Shop 
                 manufacturers={manufacturers}
-                setManufacturers={setManufacturers} 
+                dispatchManufacturers={dispatchManufacturers}
+                manufacturersData={manufacturersData}
             />
             <Playground 
                 coins={coins} 
