@@ -1,11 +1,21 @@
-import { useState, useRef } from 'react';
-
 import classNames from 'classnames';
 import styles from './Shop.module.scss';
 
-import Manufacturers from './Manufacturers';
+import type { 
+    ManufacturerState, 
+    ManufacturersReduceAction,
+    ManufacturersData 
+} from './Manufacturers/Manufacturers.d';
 
-export default function Shop(props: any) {
+import Manufacturers from './Manufacturers/Manufacturers';
+
+interface ShopProps {
+    readonly manufacturers: Array<ManufacturerState>,
+    readonly dispatchManufacturers: React.Dispatch<ManufacturersReduceAction>,
+    readonly manufacturersData: ManufacturersData,
+}
+
+export default function Shop(props: ShopProps) {
     const {
         manufacturers, 
         dispatchManufacturers,

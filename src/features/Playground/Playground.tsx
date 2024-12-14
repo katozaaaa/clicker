@@ -3,13 +3,21 @@ import { useState, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './Playground.module.scss';
 
-import ClickTrackers from './ClickTrackers';
+import ClickTrackers from './ClickTrackers/ClickTrackers';
 
-export default function Playground({coins, setCoins, coinsPerClick}: any) {
-    const [clickTrackers, setClickTrackers]: [any, any] = useState(new Array());
-    let clickTrackersNextID = useRef(0);
+import type { PlaygroundProps, ClickTracker } from './Playground.d';
 
-    const onClick = (e: any) => {
+export default function Playground(props: PlaygroundProps) {
+    const {
+        coins, 
+        setCoins, 
+        coinsPerClick
+    } = props;
+
+    const [clickTrackers, setClickTrackers] = useState(new Array<ClickTracker>());
+    const clickTrackersNextID = useRef(0);
+
+    const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const nextID = clickTrackersNextID.current;
 
         const nextClickTrackers = [
@@ -18,24 +26,24 @@ export default function Playground({coins, setCoins, coinsPerClick}: any) {
                 id: nextID,
                 position: {
                     x: e.clientX,
-                    y: e.clientY,
+                    y: e.clientY
                 },
-                coins: coinsPerClick,
+                coins: coinsPerClick
             }
-        ]
+        ];
 
-        const removeFirstClickTracker = (prevClickTrackers: any) => {
-            return prevClickTrackers.filter((clickTracker: any) => {
+        const removeFirstClickTracker = (prevClickTrackers: Array<ClickTracker>) => {
+            return prevClickTrackers.filter((clickTracker) => {
                 return clickTracker.id !== nextID;
             });
-        }
+        };
 
-        setCoins((prevCoins: any) => prevCoins + 1);
+        setCoins((prevCoins) => prevCoins + 1);
         setClickTrackers(nextClickTrackers);
         setTimeout(setClickTrackers, 3000, removeFirstClickTracker);
 
         clickTrackersNextID.current++;
-    }
+    };
 
     return (
         <div className={classNames(styles.Playground)} onClick={onClick}>

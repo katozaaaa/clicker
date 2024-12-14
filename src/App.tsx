@@ -1,20 +1,19 @@
 import { useState, useEffect, useMemo, useReducer } from 'react';
 
-// import classNames from 'classnames';
-// import styles from './App.module.scss';
-
 import Playground from './features/Playground/Playground';
 import Shop from './features/Shop/Shop';
 
-import { manufacturersData } from './features/Shop/manufacturersData';
-import { manufacturersReducer } from './features/Shop/manufacturersReducer';
+import type { ManufacturerState } from './features/Shop/Manufacturers/Manufacturers.d';
 
-function App() {
+import { manufacturersData } from './features/Shop/Manufacturers/manufacturersData';
+import { manufacturersReducer } from './features/Shop/Manufacturers/manufacturersReducer';
+
+export default function App() {
     const [coins, setCoins] = useState(0);
     const [coinsPerClick, setCoinsPerClick] = useState(1);
     const [manufacturers, dispatchManufacturers] = useReducer(
         manufacturersReducer, 
-        new Array()
+        new Array<ManufacturerState>()
     );
 
     const coinsPerSecond = useMemo(() => {
@@ -23,7 +22,7 @@ function App() {
                 return coinsPerSecond += 
                     manufacturersData[manufacturer.id].coinsPerSecond * 
                     manufacturer.count;
-            }, 0)
+            }, 0);
         }
     }, [manufacturers]);
 
@@ -35,7 +34,7 @@ function App() {
     
             return () => {
                 clearInterval(intervalID);
-            }
+            };
         }
     }, [manufacturers]);
 
@@ -54,5 +53,3 @@ function App() {
         </main>
     );
 }
-
-export default App;

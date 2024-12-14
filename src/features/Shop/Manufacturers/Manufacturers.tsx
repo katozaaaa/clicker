@@ -1,31 +1,35 @@
-import { useState, useRef } from 'react';
-
 import classNames from 'classnames';
-import styles from './Shop.module.scss';
+import styles from '../Shop.module.scss';
 
-import Manufacturer from './Manufacturer.tsx';
+import type { 
+    ManufacturersProps, 
+    ManufacturersData, 
+    ManufacturerData 
+} from './Manufacturers.d';
 
-export default function Manufacturers(props: any) {
+import Manufacturer from './Manufacturer';
+
+export default function Manufacturers(props: ManufacturersProps) {
     const {
         manufacturers, 
         dispatchManufacturers,
         manufacturersData
     } = props;
 
-    const handleClick = (id: number) => {
-        const isInManufacturers = manufacturers.some((manufacturer: any) => {
+    const handleClick = (id: keyof ManufacturersData) => {
+        const isInManufacturers = manufacturers.some((manufacturer) => {
             return manufacturer.id === id;
         });
 
         dispatchManufacturers({
             type: isInManufacturers ? 'increased' : 'added',
-            id: id,
+            id: id
         });
-    }
+    };
 
-    const manufacturerNodes = Object.entries(manufacturersData).map(
+    const manufacturerNodes = Object.entries<ManufacturerData>(manufacturersData).map(
         ([id, manufacturerData]) => {
-            const count = manufacturers.find((manufacturer: any) => {
+            const count = manufacturers.find((manufacturer) => {
                 return manufacturer.id === id;
             })?.count ?? 0;
 

@@ -1,19 +1,21 @@
 import { useState, useRef } from 'react';
 
 import classNames from 'classnames';
-import styles from './Shop.module.scss';
+import styles from '../Shop.module.scss';
 
-export default function Manufacturers(props: any) {
+import type { ManufacturerProps } from './Manufacturers.d';
+
+export default function Manufacturer(props: ManufacturerProps) {
     const {
         id,
         manufacturerData,
         count,
-        handleClick,
+        handleClick
     } = props;
 
     const onClick = () => {
         handleClick(id);
-    }
+    };
 
     return (
         <div 
@@ -24,5 +26,5 @@ export default function Manufacturers(props: any) {
             <div>{manufacturerData.price}</div>
             <div>{count}</div>
         </div>
-    )
+    );
 }
