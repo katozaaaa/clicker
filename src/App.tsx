@@ -40,7 +40,9 @@ export default function App() {
 
     return (
         <main>
-            <Shop 
+            <Shop
+                coins={coins}
+                setCoins={setCoins}
                 manufacturers={manufacturers}
                 dispatchManufacturers={dispatchManufacturers}
                 manufacturersData={manufacturersData}

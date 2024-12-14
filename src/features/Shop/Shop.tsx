@@ -7,6 +7,8 @@ import Manufacturers from './Manufacturers/Manufacturers';
 
 export default function Shop(props: ShopProps) {
     const {
+        coins,
+        setCoins,
         manufacturers, 
         dispatchManufacturers,
         manufacturersData
@@ -14,7 +16,9 @@ export default function Shop(props: ShopProps) {
 
     return (
         <div className={classNames(styles.Shop)}>
-            <Manufacturers 
+            <Manufacturers
+                coins={coins} 
+                setCoins={setCoins}
                 manufacturers={manufacturers} 
                 dispatchManufacturers={dispatchManufacturers}
                 manufacturersData={manufacturersData}

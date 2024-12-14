@@ -4,16 +4,11 @@ export interface ManufacturerState {
 }
 
 export interface ManufacturersProps {
+    readonly coins: coins,
+    readonly setCoins: React.Dispatch<React.SetStateAction<number>>,
     readonly manufacturers: Array<ManufacturerState>,
     readonly dispatchManufacturers: React.Dispatch<ManufacturersReduceAction>,
     readonly manufacturersData: ManufacturersData,
-}
-
-export interface ManufacturerProps {
-    readonly id: keyof ManufacturersData,
-    readonly manufacturerData: ManufacturerData,
-    readonly count: number,
-    readonly handleClick: (id: keyof ManufacturersData) => void,
 }
 
 export interface ManufacturerData {

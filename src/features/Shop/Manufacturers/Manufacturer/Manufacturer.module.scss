@@ -1,0 +1,45 @@
+.Manufacturer {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    opacity: 0.5;
+
+    &--available {
+        opacity: 1;
+        cursor: pointer;
+    }
+    
+    &__inner-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 5px 10px;
+        min-height: 150px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.123);
+    }
+
+    &__head {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        font-size: 2em;
+        font-weight: 700;
+    }
+
+    &__coins-per-second {
+
+    }
+
+    &__price {
+        margin-top: auto;
+    }
+
+    &__count {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+    }
+}

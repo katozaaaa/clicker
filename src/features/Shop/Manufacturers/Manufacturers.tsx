@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from '../Shop.module.scss';
+import styles from './Manufacturers.module.scss';
 
 import type { 
     ManufacturersProps, 
@@ -7,10 +7,12 @@ import type {
     ManufacturerData 
 } from './Manufacturers.d';
 
-import Manufacturer from './Manufacturer';
+import Manufacturer from './Manufacturer/Manufacturer';
 
 export default function Manufacturers(props: ManufacturersProps) {
     const {
+        coins,
+        setCoins,
         manufacturers, 
         dispatchManufacturers,
         manufacturersData
@@ -20,6 +22,8 @@ export default function Manufacturers(props: ManufacturersProps) {
         const isInManufacturers = manufacturers.some((manufacturer) => {
             return manufacturer.id === id;
         });
+
+        setCoins((coins: number) => coins - manufacturersData[id].price)
 
         dispatchManufacturers({
             type: isInManufacturers ? 'increased' : 'added',
@@ -40,6 +44,7 @@ export default function Manufacturers(props: ManufacturersProps) {
                     manufacturerData={manufacturerData}
                     count={count}
                     handleClick={handleClick}
+                    isAvailable={coins >= manufacturerData.price}
                 />
             );
         }
