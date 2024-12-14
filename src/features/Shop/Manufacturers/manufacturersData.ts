@@ -1,12 +1,4 @@
-export interface ManufacturerData {
-    readonly label: string,
-    readonly coinsPerSecond: number,
-    readonly price: number,
-}
-
-export interface ManufacturersData {
-    readonly [id: number | string]: ManufacturerData,
-}
+import type { ManufacturersData } from "./Manufacturers.d";
 
 export const manufacturersData: ManufacturersData = {
     0: {
