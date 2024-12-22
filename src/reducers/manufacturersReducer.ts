@@ -1,4 +1,21 @@
-import type { ManufacturerReducer } from './Manufacturers.d';
+import type { ManufacturersData } from "../data";
+
+export interface ManufacturerState {
+    readonly id: keyof ManufacturersData,
+    readonly count: number,
+}
+
+export type ManufacturersState = ManufacturerState[];
+
+export interface ManufacturersReduceAction {
+    readonly type: 'added' | 'increased',
+    readonly id: keyof ManufacturersData,
+}
+
+export type ManufacturerReducer = (
+    manufacturers: Array<ManufacturerState>, 
+    action: ManufacturersReduceAction,
+) => Array<ManufacturerState>
 
 export const manufacturersReducer: ManufacturerReducer = (manufacturers, action) => {
     switch(action.type) {

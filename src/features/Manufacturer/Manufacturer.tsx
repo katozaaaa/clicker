@@ -1,9 +1,19 @@
 import classNames from 'classnames';
 import styles from './Manufacturer.module.scss';
+import type { 
+    ManufacturerData,
+    ManufacturersData
+ } from '../../data';
 
-import type { ManufacturerProps } from './Manufacturer.d';
+export interface ManufacturerProps {
+    readonly id: keyof ManufacturersData,
+    readonly manufacturerData: ManufacturerData,
+    readonly count: number,
+    readonly handleClick: (id: keyof ManufacturersData) => void,
+    readonly isAvailable: boolean
+}
 
-export default function Manufacturer(props: ManufacturerProps) {
+export const Manufacturer = (props: ManufacturerProps) => {
     const {
         id,
         manufacturerData,

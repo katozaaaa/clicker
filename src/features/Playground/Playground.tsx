@@ -1,18 +1,26 @@
-import { useState, useRef } from 'react';
-
 import classNames from 'classnames';
 import styles from './Playground.module.scss';
+import { useState, useRef } from 'react';
+import { useCoins, useDispatchCoins } from '../../hooks';
+import { ClickTrackers } from '../ClickTrackers/ClickTrackers';
 
-import ClickTrackers from './ClickTrackers/ClickTrackers';
+export interface PlaygroundProps {
+    readonly coinsPerClick: number,
+}
 
-import type { PlaygroundProps, ClickTracker } from './Playground.d';
+export interface ClickTracker {
+    readonly id: number,
+    readonly position: {
+        readonly x: number,
+        readonly y: number,
+    },
+    readonly coins: number,
+}
 
-export default function Playground(props: PlaygroundProps) {
-    const {
-        coins, 
-        setCoins, 
-        coinsPerClick
-    } = props;
+export const Playground = (props: PlaygroundProps) => {
+    const coinsPerClick = props.coinsPerClick;
+    const coins = useCoins();
+    const dispatchCoins = useDispatchCoins();
 
     const [clickTrackers, setClickTrackers] = useState(new Array<ClickTracker>());
     const clickTrackersNextID = useRef(0);
@@ -38,7 +46,11 @@ export default function Playground(props: PlaygroundProps) {
             });
         };
 
-        setCoins((prevCoins) => prevCoins + 1);
+        dispatchCoins({
+            type: 'increased',
+            count: coinsPerClick,
+        })
+
         setClickTrackers(nextClickTrackers);
         setTimeout(setClickTrackers, 3000, removeFirstClickTracker);
 

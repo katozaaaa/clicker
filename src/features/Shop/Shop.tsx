@@ -1,27 +1,27 @@
 import classNames from 'classnames';
 import styles from './Shop.module.scss';
+import { Manufacturers } from '../Manufacturers/Manufacturers';
+import type {
+    ManufacturersState,
+    ManufacturersReduceAction,
+} from '../../reducers';
 
-import type { ShopProps } from './Shop.d';
+interface ShopProps {
+    readonly manufacturers: ManufacturersState,
+    readonly dispatchManufacturers: React.Dispatch<ManufacturersReduceAction>,
+}
 
-import Manufacturers from './Manufacturers/Manufacturers';
-
-export default function Shop(props: ShopProps) {
+export const Shop = (props: ShopProps) => {
     const {
-        coins,
-        setCoins,
         manufacturers, 
         dispatchManufacturers,
-        manufacturersData
     } = props;
 
     return (
         <div className={classNames(styles.Shop)}>
             <Manufacturers
-                coins={coins} 
-                setCoins={setCoins}
                 manufacturers={manufacturers} 
                 dispatchManufacturers={dispatchManufacturers}
-                manufacturersData={manufacturersData}
             />
         </div>
     );

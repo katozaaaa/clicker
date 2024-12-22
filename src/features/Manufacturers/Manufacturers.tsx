@@ -1,29 +1,39 @@
 import classNames from 'classnames';
 import styles from './Manufacturers.module.scss';
-
+import { manufacturersData } from "../../data";
+import { Manufacturer } from '../Manufacturer/Manufacturer';
+import { useCoins, useDispatchCoins } from '../../hooks';
+import type { ManufacturersData } from "../../data";
 import type { 
-    ManufacturersProps, 
-    ManufacturersData, 
-    ManufacturerData 
-} from './Manufacturers.d';
+    ManufacturersState, 
+    ManufacturersReduceAction 
+} from "../../reducers";
 
-import Manufacturer from './Manufacturer/Manufacturer';
+type ManufacturerData = typeof manufacturersData[0];
 
-export default function Manufacturers(props: ManufacturersProps) {
+export interface ManufacturersProps {
+    readonly manufacturers: ManufacturersState,
+    readonly dispatchManufacturers: React.Dispatch<ManufacturersReduceAction>,
+}
+
+export const Manufacturers = (props: ManufacturersProps) => {
     const {
-        coins,
-        setCoins,
         manufacturers, 
         dispatchManufacturers,
-        manufacturersData
     } = props;
+
+    const coins = useCoins();
+    const dispatchCoins = useDispatchCoins();
 
     const handleClick = (id: keyof ManufacturersData) => {
         const isInManufacturers = manufacturers.some((manufacturer) => {
             return manufacturer.id === id;
         });
 
-        setCoins((coins: number) => coins - manufacturersData[id].price)
+        dispatchCoins({
+            type: 'decreased',
+            count: manufacturersData[id].price,
+        })
 
         dispatchManufacturers({
             type: isInManufacturers ? 'increased' : 'added',
