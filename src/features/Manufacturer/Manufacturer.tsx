@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from './Manufacturer.module.scss';
+import styles from './Manufacturer.module.scss'; 
 import type { 
     ManufacturerData,
     ManufacturersData
@@ -9,7 +9,8 @@ export interface ManufacturerProps {
     readonly id: keyof ManufacturersData,
     readonly manufacturerData: ManufacturerData,
     readonly count: number,
-    readonly handleClick: (id: keyof ManufacturersData) => void,
+    readonly price: number,
+    readonly handleClick: (id: keyof ManufacturersData, price: number) => void,
     readonly isAvailable: boolean
 }
 
@@ -18,13 +19,14 @@ export const Manufacturer = (props: ManufacturerProps) => {
         id,
         manufacturerData,
         count,
+        price,
         handleClick,
         isAvailable,
     } = props;
 
     const onClick = () => {
         if (isAvailable) {
-            handleClick(id);
+            handleClick(id, price);
         }
     };
 
@@ -48,7 +50,7 @@ export const Manufacturer = (props: ManufacturerProps) => {
                     </div>
                 </div>
                 <div className={classNames(styles['Manufacturer__price'])}>
-                    Цена: {manufacturerData.price}
+                    Цена: {price}
                 </div>
                 <div className={classNames(styles['Manufacturer__count'])}>
                     Приобретено: {count}

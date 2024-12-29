@@ -25,14 +25,14 @@ export const Manufacturers = (props: ManufacturersProps) => {
     const coins = useCoins();
     const dispatchCoins = useDispatchCoins();
 
-    const handleClick = (id: keyof ManufacturersData) => {
+    const handleClick = (id: keyof ManufacturersData, price: number) => {
         const isInManufacturers = manufacturers.some((manufacturer) => {
             return manufacturer.id === id;
         });
 
         dispatchCoins({
             type: 'decreased',
-            count: manufacturersData[id].price,
+            count: price,
         })
 
         dispatchManufacturers({
@@ -44,8 +44,11 @@ export const Manufacturers = (props: ManufacturersProps) => {
     const manufacturerNodes = Object.entries<ManufacturerData>(manufacturersData).map(
         ([id, manufacturerData]) => {
             const count = manufacturers.find((manufacturer) => {
-                return manufacturer.id === id;
-            })?.count ?? 0;
+                    return manufacturer.id === id;
+                })?.count ?? 0;
+
+            const price = Math.floor(manufacturerData.price * Math.pow(1.15, count));
+            const isAvailable = coins >= price;
 
             return (
                 <Manufacturer 
@@ -53,8 +56,9 @@ export const Manufacturers = (props: ManufacturersProps) => {
                     id={id}
                     manufacturerData={manufacturerData}
                     count={count}
+                    price={price}
                     handleClick={handleClick}
-                    isAvailable={coins >= manufacturerData.price}
+                    isAvailable={isAvailable}
                 />
             );
         }
