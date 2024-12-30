@@ -11,7 +11,7 @@ import {
 
 export const AppStateProvider = () => {
     const dispatchCoins = useDispatchCoins();
-    const [coinsPerClick, setCoinsPerClick] = useState(1);
+    const [coinsPerClick] = useState(1); // TODO: add the ability to increase the number of coins per click
     const [manufacturers, dispatchManufacturers] = useManufacturersReducer()
 
     const coinsPerSecond = useCoinsPerSecond(manufacturers);
