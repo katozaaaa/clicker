@@ -1,0 +1,8 @@
+@use 'sass:map';
+
+$colors: (
+    'white': #FFFFFF,
+    'brown': (
+        'dark': #28150B,
+    ),
+)

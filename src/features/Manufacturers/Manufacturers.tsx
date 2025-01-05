@@ -2,12 +2,12 @@ import classNames from 'classnames';
 import styles from './Manufacturers.module.scss';
 import { manufacturersData } from "../../data";
 import { Manufacturer } from '../Manufacturer/Manufacturer';
-import { useCoins, useDispatchCoins } from '../../hooks';
+import { useCoins, useDispatchCoins } from '../../shared/hooks';
 import type { ManufacturersData } from "../../data";
 import type { 
     ManufacturersState, 
     ManufacturersReduceAction 
-} from "../../reducers";
+} from "../../shared/reducers";
 
 type ManufacturerData = typeof manufacturersData[0];
 
@@ -25,21 +25,7 @@ export const Manufacturers = (props: ManufacturersProps) => {
     const coins = useCoins();
     const dispatchCoins = useDispatchCoins();
 
-    const handleClick = (id: keyof ManufacturersData, price: number) => {
-        const isInManufacturers = manufacturers.some((manufacturer) => {
-            return manufacturer.id === id;
-        });
-
-        dispatchCoins({
-            type: 'decreased',
-            count: price,
-        })
-
-        dispatchManufacturers({
-            type: isInManufacturers ? 'increased' : 'added',
-            id: id
-        });
-    };
+    
 
     const manufacturerNodes = Object.entries<ManufacturerData>(manufacturersData).map(
         ([id, manufacturerData]) => {

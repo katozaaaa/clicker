@@ -1,0 +1,9 @@
+@use '../../styles/variables.scss' as v;
+
+.Button {
+    padding: 25px 50px;
+    outline: none;
+    border: none;
+    color: map.get(v.$colors, 'brown', 'dark');
+    background-color: map.get(v.$color, 'white');
+}
