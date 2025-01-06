@@ -1,8 +1,12 @@
 @use 'sass:map';
 
+$font-family: (
+    'primary': ('Monocraft', sans-serif),
+);
+
 $colors: (
     'white': #FFFFFF,
     'brown': (
         'dark': #28150B,
     ),
-)
+);

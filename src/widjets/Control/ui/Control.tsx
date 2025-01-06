@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { Button } from '../../../shared';
 
-export const Control = (props) => {
+interface ControlProps {
+    buttonText: string,
+    children: React.ReactElement | React.ReactElement[],
+}
+
+export const Control = (props: ControlProps) => {
     const {
         buttonText,
         children,

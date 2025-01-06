@@ -1,5 +1,6 @@
-import { CoinsProvider } from "../shared/contexts";
-import { AppStateProvider } from "../features";
+import { CoinsProvider } from "../../../shared";
+import { AppStateProvider } from "../AppStateProvider/AppStateProvider";
+import '../../../shared/styles/index.scss';
 
 export const App = () => {
     return (

@@ -1,20 +1,33 @@
 import { useState } from 'react';
 import { Button } from '../../../shared';
-import { categoriesData } from '../model/categoriesData';
-import type { CategoryData } from '../model/categoriesData';
+import { catalogData } from '../../../entities';
+import { Products } from './Products';
+import type { CategoryData, ProductsState, ProductsReduceAction } from '../../../entities';
 
-export const Catalog = () => {
-    const [activeCategory, setActiveCategory] = useState(null)
+interface CatalogProps {
+    productStates: {
+        [index: string]: {
+            products: ProductsState,
+            dispatchProducts: React.Dispatch<ProductsReduceAction>,
+        }
+    }
+}
 
-    const categoriesNodes = Object.entries<CategoryData>(categoriesData).map(
-        ([id, categoryData]) => {
+export const Catalog = ({ productStates }: CatalogProps) => {
+    const [activeCategory, setActiveCategory] = useState<null | string>(null)
+
+    const categoriesNodes = Object.values<CategoryData>(catalogData).map(
+        (categoryData) => {
             const onClick = () => {
-                setActiveCategory(id);
+                setActiveCategory(categoryData.id);
             }
 
             return (
-                <Button onClick={onClick}>
-                    {categoryData.name}
+                <Button 
+                    key={categoryData.id}
+                    onClick={onClick}
+                >
+                    {categoryData.label}
                 </Button>
             );
         }
@@ -34,6 +47,8 @@ export const Catalog = () => {
                     key={activeCategory}
                     id={activeCategory}
                     backToCategories={() => setActiveCategory(null)}
+                    products={productStates[activeCategory].products}
+                    dispatchProducts={productStates[activeCategory].dispatchProducts}
                 />
             }
         </div>

@@ -1,19 +1,20 @@
 import { useEffect } from "react";
-import type { ManufacturersState, CoinsReduceAction  } from '../reducers';
+import type { ProductsState } from "../../../entities";
+import type { CoinsReduceAction } from "../../../shared";
 
 type UseCoinsPerSecondEffect = (
-    manufacturers: ManufacturersState,
+    producers: ProductsState,
     coinsPerSecond: number,
     dispatchCoins: React.Dispatch<CoinsReduceAction>
 ) => void;
 
 export const useCoinsPerSecondEffect: UseCoinsPerSecondEffect = (
-        manufacturers, 
+        producers, 
         coinsPerSecond, 
         dispatchCoins
     ) => {
         useEffect(() => {
-            if (manufacturers && manufacturers.length !== 0) {
+            if (producers && producers.length !== 0) {
                 const intervalID = setInterval(() => {
                     dispatchCoins({
                         type: 'increased',
@@ -25,5 +26,5 @@ export const useCoinsPerSecondEffect: UseCoinsPerSecondEffect = (
                     clearInterval(intervalID);
                 };
             }
-        }, [manufacturers]);
+        }, [producers]);
     }

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../styles/variables.scss' as v;
 
 .Button {
@@ -5,5 +6,5 @@
     outline: none;
     border: none;
     color: map.get(v.$colors, 'brown', 'dark');
-    background-color: map.get(v.$color, 'white');
+    background-color: map.get(v.$colors, 'white');
 }

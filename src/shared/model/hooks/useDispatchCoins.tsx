@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DispatchCoinsContext } from "../contexts";
+import { DispatchCoinsContext } from "../contexts/CoinsContext";
 
 export const useDispatchCoins = () => {
     const dispatchCoins = useContext(DispatchCoinsContext);

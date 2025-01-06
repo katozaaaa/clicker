@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from '../Playground/Playground.module.scss';
+import styles from './ClickTrackers.module.scss';
 
 export interface ClickTracker {
     readonly id: number,
@@ -19,7 +19,7 @@ export const ClickTrackers = ({clickTrackers}: ClickTrackersProps) => {
         return (
             <div
                 key={clickTracker.id}
-                className={classNames(styles['Playground__click-tracker'])}
+                className={classNames(styles['ClickTrackers__click-tracker'])}
                 style={{
                     top: clickTracker.position.y,
                     left: clickTracker.position.x
@@ -31,7 +31,7 @@ export const ClickTrackers = ({clickTrackers}: ClickTrackersProps) => {
     });
 
     return (
-        <div className={classNames(styles['Playground__click-trackers'])}>
+        <div className={classNames(styles.ClickTrackers)}>
             {clickTrackersList}
         </div>
     );

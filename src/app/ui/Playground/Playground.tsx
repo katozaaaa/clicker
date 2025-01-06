@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import styles from './Playground.module.scss';
 import { useState, useRef } from 'react';
-import { useCoins, useDispatchCoins } from '../../shared/hooks';
-import { ClickTrackers } from '../ClickTrackers/ClickTrackers';
+import { useCoins, useDispatchCoins } from '../../../shared';
+import { ClickTrackers } from '../../../widjets';
 
 export interface PlaygroundProps {
     readonly coinsPerClick: number,

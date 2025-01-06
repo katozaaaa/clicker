@@ -1,26 +1,36 @@
 import { useState } from 'react';
-// import { Shop } from '../Shop/Shop';
+import { Controls } from '../Controls/Controls';
 import { Playground } from '../Playground/Playground';
-
+import { useProductsReducer } from '../../../entities';
+import { useDispatchCoins, useCoinsPerSecond, useCoinsPerSecondEffect } from '../../../shared';
 
 export const AppStateProvider = () => {
     const dispatchCoins = useDispatchCoins();
     const [coinsPerClick] = useState(1); // TODO: add the ability to increase the number of coins per click
-    // const [manufacturers, dispatchManufacturers] = useManufacturersReducer()
+    const [producers, dispatchProducers] = useProductsReducer();
+    const [improvements, dispatchImporvements] = useProductsReducer();
+    const coinsPerSecond = useCoinsPerSecond(producers);
+    useCoinsPerSecondEffect(producers, coinsPerSecond, dispatchCoins);
 
-    const coinsPerSecond = useCoinsPerSecond(manufacturers);
-    useCoinsPerSecondEffect(manufacturers, coinsPerSecond, dispatchCoins);
+    const productStates = {
+        'producers_cat': {
+            products: producers,
+            dispatchProducts: dispatchProducers,
+        },
+        'improvements_cat': {
+            products: improvements,
+            dispatchProducts: dispatchImporvements,
+        }
+    }
 
     return (
-        <main>
-            {/* <Shop
-                manufacturers={manufacturers}
-                dispatchManufacturers={dispatchManufacturers}
+        <>
+            <Controls
+                productStates={productStates}
             />
-            */}
             <Playground 
                 coinsPerClick={coinsPerClick}
             />
-        </main>
+        </>
     );
 }

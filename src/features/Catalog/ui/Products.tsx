@@ -1,57 +1,74 @@
-import { ProductList } from "./ProductList";
-import { Button, Navigation } from "../../../shared";
-import { categoriesData } from "../model/categoriesData";
-import { Producer } from "../../../enitites/Producer";
-import { producersData } from "../../../enitites/Producer";
-import type { ProducerData } from "../../../enitites/Producer";
+import { Button, Navigation, useCoins, useDispatchCoins} from "../../../shared";
+import { Product, catalogData, getOnPurchasedProduct } from "../../../entities";
+import type { CategoryData, ProductData, ProductsState, ProductsReduceAction } from '../../../entities';
 
-export const Products = (props) => {
+interface ProductProps {
+    id: string;
+    backToCategories: () => void;
+    products: ProductsState,
+    dispatchProducts: React.Dispatch<ProductsReduceAction>
+}
+
+export const Products = (props: ProductProps) => {
     const {
         id,
         backToCategories,
-        producers,
+        products,
+        dispatchProducts,
     } = props;
 
-    const categoriesList = {
-        0: 
-            <div>
-                {
-                    Object.entries<ProducerData>(producersData).map(
-                        ([id, producerData]) => {
-                            const count = producers.find((producer) => {
-                                    return producer.id === id;
-                                })?.count ?? 0;
-                
-                            const price = Math.floor(producerData.price * Math.pow(1.15, count));
-                            const isAvailable = coins >= price;
-                
-                            return (
-                                <Button 
-                                    disabled={!isAvailable}
-                                    onClick={categoriesData[0].purchaseProductMethod}
-                                >
-                                    <Producer
-                                        key={id}
-                                        label={producerData.label}
-                                        coinsPerSecond={producerData.coinsPerSecond}
-                                        count={count}
-                                        price={price}
-                                    />
-                                </Button>         
-                            );
-                        }
-                    )
+    const coins = useCoins();
+    const dispatchCoins = useDispatchCoins();
+
+    const categoryData = Object.values<CategoryData>(catalogData).find((categoryData) => {
+        return categoryData.id === id;
+    }) as CategoryData;
+    const productsData = categoryData.products;
+    const onPurchasedProduct = getOnPurchasedProduct(dispatchCoins, dispatchProducts);
+
+    const productNodes = (
+        Object.values<ProductData>(productsData).map(
+            (productData) => {
+                const count = products.find((product) => {
+                        return product.id === productData.id;
+                    })?.count ?? 0;
+    
+                const price = Math.floor(productData.price * Math.pow(1.15, count));
+                const isAvailable = coins >= price;
+                const onClick = () => {
+                    onPurchasedProduct(productData.id, price, products);
                 }
-            </div>
-    }
+                const subtitle = ('coinsPerSecond') in productData ? 
+                    'Coins per second: ' + productData.coinsPerSecond :
+                    productData.description;
+    
+                return (
+                    <Button
+                        key={productData.id}
+                        disabled={!isAvailable}
+                        onClick={onClick}
+                    >
+                        <Product
+                            label={productData.label}
+                            subtitle={subtitle}
+                            count={count}
+                            price={price}
+                        />
+                    </Button>         
+                );
+            }
+        )
+    )
 
     return (
         <div>
             <Navigation
-                title={categoriesData[id].name}
+                title={categoryData.label}
                 onClick={backToCategories}
-            >
-            {categoriesList[id]}
+            />
+            <div>
+                {productNodes}
+            </div>
         </div>
     )
 }

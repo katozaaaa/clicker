@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { useCoinsReducer } from "../hooks";
-import type { CoinsReduceAction } from "../reducers";
+import { useCoinsReducer } from "../hooks/useCoinsReducer";
+import type { CoinsReduceAction } from "../reducers/coinsReducer";
 
 export const CoinsContext = createContext(0);
 export const DispatchCoinsContext = createContext<React.Dispatch<CoinsReduceAction> | null>(null);
