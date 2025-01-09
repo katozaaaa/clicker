@@ -3,6 +3,7 @@ export {
     catalogData,
     useProductsReducer,
     getOnPurchasedProduct,
+    getProductData
 } from './Product';
 export type { 
     CategoryData, 

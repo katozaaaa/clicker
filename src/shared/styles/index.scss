@@ -1,14 +1,11 @@
 @use 'sass:map';
+@use './styles.scss';
 @use './variables.scss' as v;
 
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
     color-scheme: light;
-    color: #46413c;
-    background-color: #FAEBD7;
+    color: map.get(v.$color, 'brown', 'dark');
+    background-image: linear-gradient(to bottom, #204677 0%, #CBE0FF 100%);
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -22,7 +19,13 @@
 }
 
 html {
+    font-size: calc(16/1920 * 100vw);
+    font-weight: 400;
+}
+
+html * {
     font-family: map.get(v.$font-family, 'primary');
+    line-height: 1.5;
 }
 
 body {
@@ -38,5 +41,7 @@ body {
 
 main {
     position: relative;
+    overflow: hidden;
     z-index: 0;
+    min-height: 100svh;
 }

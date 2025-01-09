@@ -2,9 +2,23 @@
 @use '../../styles/variables.scss' as v;
 
 .Button {
-    padding: 25px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(20/1920 * 100vw) calc(30/1920 * 100vw);
     outline: none;
     border: none;
-    color: map.get(v.$colors, 'brown', 'dark');
-    background-color: map.get(v.$colors, 'white');
+    font-size: calc(32/1920 * 100vw);
+    color: map.get(v.$color, 'brown', 'dark');
+    background-color: map.get(v.$color, 'white');
+    box-shadow: 
+        inset calc(-3/1920 * 100vw) calc(-3/1920 * 100vw) 0px 0px #8F7B68,
+        inset calc(-2/1920 * 100vw) calc(-2/1920 * 100vw) 0px calc(4/1920 * 100vw) #9E8873,
+        inset calc(-4/1920 * 100vw) calc(-4/1920 * 100vw) 0px calc(8/1920 * 100vw) #C6AA90;
+    cursor: pointer;
+
+    &[disabled="disabled"],
+    &:disabled {
+        cursor: not-allowed;
+    }
 }

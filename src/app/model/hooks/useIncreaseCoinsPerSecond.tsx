@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import type { ProductsState } from "../../../entities";
 import type { CoinsReduceAction } from "../../../shared";
 
-type UseCoinsPerSecondEffect = (
+type UseIncreaseCoinsPerSecond = (
     producers: ProductsState,
+    improvements: ProductsState,
     coinsPerSecond: number,
     dispatchCoins: React.Dispatch<CoinsReduceAction>
 ) => void;
 
-export const useCoinsPerSecondEffect: UseCoinsPerSecondEffect = (
-        producers, 
+export const useIncreaseCoinsPerSecond: UseIncreaseCoinsPerSecond = (
+        producers,
+        improvements,
         coinsPerSecond, 
         dispatchCoins
     ) => {
@@ -26,5 +28,5 @@ export const useCoinsPerSecondEffect: UseCoinsPerSecondEffect = (
                     clearInterval(intervalID);
                 };
             }
-        }, [producers]);
+        }, [producers, improvements]);
     }

@@ -1,66 +1,51 @@
 import classNames from 'classnames';
 import styles from './Playground.module.scss';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
+import { useClickTrackersReducer } from '../../../features';
 import { useCoins, useDispatchCoins } from '../../../shared';
-import { ClickTrackers } from '../../../widjets';
+import { ClickTrackers } from '../../../features';
+import { getOnAddClickTracker } from '../../../features';
 
 export interface PlaygroundProps {
-    readonly coinsPerClick: number,
-}
-
-export interface ClickTracker {
-    readonly id: number,
-    readonly position: {
-        readonly x: number,
-        readonly y: number,
-    },
-    readonly coins: number,
+    coinsPerClick: number,
+    coinsPerSecond: number,
 }
 
 export const Playground = (props: PlaygroundProps) => {
-    const coinsPerClick = props.coinsPerClick;
+    const {
+        coinsPerClick,
+        coinsPerSecond,
+    } = props;
+    
     const coins = useCoins();
     const dispatchCoins = useDispatchCoins();
-
-    const [clickTrackers, setClickTrackers] = useState(new Array<ClickTracker>());
+    const [clickTrackers, dispatchClickTrackers] = useClickTrackersReducer();
     const clickTrackersNextID = useRef(0);
 
+    const onAddClickTracker = getOnAddClickTracker(
+        clickTrackersNextID,
+        dispatchClickTrackers,
+        coinsPerClick,
+    );
+
     const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        const nextID = clickTrackersNextID.current;
-
-        const nextClickTrackers = [
-            ...clickTrackers,
-            {
-                id: nextID,
-                position: {
-                    x: e.clientX,
-                    y: e.clientY
-                },
-                coins: coinsPerClick
-            }
-        ];
-
-        const removeFirstClickTracker = (prevClickTrackers: Array<ClickTracker>) => {
-            return prevClickTrackers.filter((clickTracker) => {
-                return clickTracker.id !== nextID;
-            });
-        };
+        onAddClickTracker(e);
 
         dispatchCoins({
             type: 'increased',
             count: coinsPerClick,
         })
-
-        setClickTrackers(nextClickTrackers);
-        setTimeout(setClickTrackers, 3000, removeFirstClickTracker);
-
-        clickTrackersNextID.current++;
     };
 
     return (
         <div className={classNames(styles.Playground)} onClick={onClick}>
-            <div className={classNames(styles['Playground__coins'])}>
-                {coins}
+            <div className={classNames(styles['Playground__wallet'])}>
+                <div className={classNames(styles['Playground__coins'])}>
+                    {coins}
+                </div>
+                <div className={classNames(styles['Playground__coins-per-second'])}>
+                    Coins per second: {coinsPerSecond}
+                </div>
             </div>
             {clickTrackers.length !== 0 && (
                 <ClickTrackers clickTrackers={clickTrackers} />

@@ -1,3 +1,29 @@
 .Product {
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: calc(50/1920 * 100vw);
+    width: 100%;
+
+    &__head {
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: calc(10/1920 * 100vw);
+        text-align: start;
+    }
+
+    &__label {
+        font-size: calc(24/1920 * 100vw);
+    }
+
+    &__subtitle, &__price, &__count {
+        font-size: calc(14/1920 * 100vw);
+    }
 }

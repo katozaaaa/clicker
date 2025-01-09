@@ -1,13 +1,17 @@
+import classNames from 'classnames';
+import styles from './Control.module.scss';
 import { useState } from 'react';
 import { Button } from '../../../shared';
 
 interface ControlProps {
+    className: string,
     buttonText: string,
     children: React.ReactElement | React.ReactElement[],
 }
 
 export const Control = (props: ControlProps) => {
     const {
+        className,
         buttonText,
         children,
     } = props;
@@ -19,15 +23,21 @@ export const Control = (props: ControlProps) => {
     }
 
     return (
-        <div>
-            <Button onClick={onClick}>
+        <div className={
+            classNames(
+                styles.Control,
+                className,
+            )
+        }>
+            <Button 
+                className={
+                    classNames(styles['Control__button'])
+                } 
+                onClick={onClick}
+            >
                 {buttonText}
             </Button>
-            {visibility && 
-                <div>
-                    {children}
-                </div>
-            }
+            { visibility && children }
         </div>
     )
 }

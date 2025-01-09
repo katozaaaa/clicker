@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use '../../styles/variables.scss' as v;
+
+.Navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(10/1920 * 100vw);
+    width: 100%;
+
+    &__title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: calc(10/1920 * 100vw) calc(20/1920 * 100vw);
+        width: 100%;
+        font-size: calc(32/1920 * 100vw);
+        border-bottom: calc(5/1920 * 100vw) solid #C6AA90;
+    }
+}

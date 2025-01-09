@@ -1,6 +1,22 @@
-import { Button, Navigation, useCoins, useDispatchCoins} from "../../../shared";
-import { Product, catalogData, getOnPurchasedProduct } from "../../../entities";
-import type { CategoryData, ProductData, ProductsState, ProductsReduceAction } from '../../../entities';
+import classNames from 'classnames';
+import styles from './Catalog.module.scss';
+import { 
+    Button, 
+    Navigation, 
+    useCoins, 
+    useDispatchCoins
+} from "../../../shared";
+import { 
+    Product, 
+    catalogData, 
+    getOnPurchasedProduct 
+} from "../../../entities";
+import type { 
+    CategoryData, 
+    ProductData, 
+    ProductsState, 
+    ProductsReduceAction 
+} from '../../../entities';
 
 interface ProductProps {
     id: string;
@@ -20,20 +36,27 @@ export const Products = (props: ProductProps) => {
     const coins = useCoins();
     const dispatchCoins = useDispatchCoins();
 
-    const categoryData = Object.values<CategoryData>(catalogData).find((categoryData) => {
-        return categoryData.id === id;
-    }) as CategoryData;
+    const categoryData = 
+        Object.values<CategoryData>(catalogData)
+        .find((categoryData) => {
+            return categoryData.id === id;
+        }) as CategoryData;
+    
     const productsData = categoryData.products;
     const onPurchasedProduct = getOnPurchasedProduct(dispatchCoins, dispatchProducts);
 
     const productNodes = (
-        Object.values<ProductData>(productsData).map(
-            (productData) => {
+        Object.values<ProductData>(productsData)
+        .map((productData) => {
                 const count = products.find((product) => {
                         return product.id === productData.id;
                     })?.count ?? 0;
     
-                const price = Math.floor(productData.price * Math.pow(1.15, count));
+                const price = Math.floor(
+                    productData.price * 
+                    Math.pow(categoryData.priceMultiplier, count)
+                );
+
                 const isAvailable = coins >= price;
                 const onClick = () => {
                     onPurchasedProduct(productData.id, price, products);
@@ -44,6 +67,7 @@ export const Products = (props: ProductProps) => {
     
                 return (
                     <Button
+                        className={classNames(styles['Catalog__product-button'])}
                         key={productData.id}
                         disabled={!isAvailable}
                         onClick={onClick}
@@ -56,17 +80,16 @@ export const Products = (props: ProductProps) => {
                         />
                     </Button>         
                 );
-            }
-        )
+        })
     )
 
     return (
-        <div>
+        <div className={classNames(styles['Catalog__products-wrapper'])}>
             <Navigation
                 title={categoryData.label}
                 onClick={backToCategories}
             />
-            <div>
+            <div className={classNames(styles['Catalog__products'])}>
                 {productNodes}
             </div>
         </div>

@@ -16,7 +16,10 @@ interface ControlsProps {
 export const Controls = ({ productStates }: ControlsProps) => {
     return (
         <div className={classNames(styles.Controls)}>
-            <Control buttonText={'Shop'}>
+            <Control
+                className={classNames(styles['Controls__shop'])}
+                buttonText={'Shop'}
+            >
                 <Catalog productStates={productStates} />
             </Control>
         </div>

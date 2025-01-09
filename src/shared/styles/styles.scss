@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use './variables.scss' as v;
+
+.shadow-border {
+    position: relative;
+    overflow: hidden;
+    background-color: map.get(v.$color, 'white');
+    box-shadow: 
+        inset -3px -3px 0px 0px #8F7B68,
+        inset -2px -2px 0px 4px #9E8873,
+        inset -4px -4px 0px 8px #C6AA90;
+}

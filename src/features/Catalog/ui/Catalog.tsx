@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+import styles from './Catalog.module.scss';
 import { useState } from 'react';
 import { Button } from '../../../shared';
 import { catalogData } from '../../../entities';
@@ -23,7 +25,8 @@ export const Catalog = ({ productStates }: CatalogProps) => {
             }
 
             return (
-                <Button 
+                <Button
+                    className={classNames(styles['Catalog__category'])}
                     key={categoryData.id}
                     onClick={onClick}
                 >
@@ -34,16 +37,16 @@ export const Catalog = ({ productStates }: CatalogProps) => {
     )
 
     return (
-        <div>
+        <div className={classNames(styles.Catalog)}>
             {
                 activeCategory === null &&
-                <div>
+                <div className={classNames(styles['Catalog__categories'])}>
                     {categoriesNodes}
                 </div>
             }
             {
                 activeCategory !== null &&
-                <Products 
+                <Products
                     key={activeCategory}
                     id={activeCategory}
                     backToCategories={() => setActiveCategory(null)}

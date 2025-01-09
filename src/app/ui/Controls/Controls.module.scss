@@ -1,3 +1,12 @@
 .Controls {
-    position: relative;
+    display: contents;
+
+    &__shop {
+        position: absolute;
+        overflow: hidden;
+        z-index: 1;
+        top: 10px;
+        left: 10px;
+        height: calc(100vh - 10px * 2);
+    }
 }

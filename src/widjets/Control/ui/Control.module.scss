@@ -1,0 +1,12 @@
+.Control {
+    display: flex;
+    flex-direction: column;
+    gap: calc(10/1920 * 100vw);
+    max-width: calc(540/1920 * 100vw);
+    width: 100%;
+
+    &__button {
+        font-size: calc(36/1920 * 100vw);
+        width: 100%;
+    }
+}
